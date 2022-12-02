@@ -14,7 +14,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		// $usu tiene campos correo y codRes, correo 
 		$_SESSION['usuario'] = $usu;
 		$_SESSION['carrito'] = [];
-		header("Location: categorias.php");
+		$rol = $usu["Rol"];
+		switch($rol){
+			case 0:
+				header("Location: categorias.php");
+				break;
+			case 1:
+				header("Location: pedidos.php"); 
+				break;
+			case 2:
+				header("Location: restaurantes.php");
+				break;
+			default:
+				echo "ERROR: Rol desconocido";
+		}
 		return;
 	}	
 }
