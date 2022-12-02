@@ -112,4 +112,27 @@ function insertar_pedido($carrito, $codRes){
 	$bd->commit();
 	return $pedido;
 }
+function getCodCat($cod){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	$q = "SELECT CodCat FROM productos WHERE CodProd='$cod'";
+	$res = $bd->query($q);
+	if(!$res){
+		return false;
+	}
+	$res = $res->fetchAll();
+	var_export($res);
+	return $res[0]["CodCat"];
+}
+function getNombre($cod){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	$q = "SELECT Nombre FROM productos WHERE CodProd='$cod'";
+	$res = $bd->query($q);
+	if(!$res){
+		return false;
+	}
+	$res = $res->fetchAll();
+	return $res[0]["Nombre"];
+}
 

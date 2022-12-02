@@ -1,6 +1,7 @@
 <?php 
 /*comprueba que el usuario haya abierto sesión o redirige*/
 require_once 'sesiones.php';
+require_once 'bd.php';
 comprobar_sesion();
 $cod = $_POST['cod'];
 $unidades = (int)$_POST['unidades'];
@@ -10,4 +11,6 @@ if(isset($_SESSION['carrito'][$cod])){
 }else{
 	$_SESSION['carrito'][$cod] = $unidades;		
 }
-header("Location: carrito.php");
+$codCat = getCodCat($cod);
+$nombre = getNombre($cod);
+header("Location: productos.php?categoria=$codCat&producto=$nombre&unidades=$unidades");
