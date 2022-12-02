@@ -167,3 +167,37 @@ function cambiar_estado($cod){
 	}
 	return $q;
 }
+function cargar_restaurantes(){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	$ins = "select * from restaurantes";
+	$resul = $bd->query($ins);	
+	if (!$resul) {
+		return FALSE;
+	}
+	return $resul->fetchAll();	
+}
+
+function modificar($cod, $Correo, $Clave, $Pais, $CP, $Ciudad, $Direccion, $Rol){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	
+	$q = "UPDATE restaurantes SET Correo='$Correo', Clave='$Clave', Pais='$Pais', CP='$CP', Ciudad='$Ciudad', Direccion='$Direccion', Rol='$Rol' WHERE CodRes='$cod'";
+	$res = $bd->query($q);
+	if(!$res){
+		return False;
+	}
+	return $q;
+}
+
+function crear( $Correo, $Clave, $Pais, $CP, $Ciudad, $Direccion, $Rol){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	
+	$q = "INSERT INTO restaurantes (Correo, Clave, Pais, CP, Ciudad, Direccion, Rol) VALUES ('$Correo', '$Clave','$Pais','$CP','$Ciudad','$Direccion','$Rol')";
+	$res = $bd->query($q);
+	if(!$res){
+		return False;
+	}
+	return $q;
+}

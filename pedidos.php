@@ -15,7 +15,7 @@
 	<body>
 		<?php 
 		require 'cabecera.php';
-		$pedidos = cargar_pedidos();		
+		$pedidos = cargar_restaurantes();		
 		if($pedidos === FALSE){
 			echo "<p class='error'>Error al conectar con la base datos</p>";
 			exit;
