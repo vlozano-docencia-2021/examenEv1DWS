@@ -136,3 +136,34 @@ function getNombre($cod){
 	return $res[0]["Nombre"];
 }
 
+function cargar_pedidos(){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	$ins = "select * from pedidos";
+	$resul = $bd->query($ins);	
+	if (!$resul) {
+		return FALSE;
+	}
+	return $resul->fetchAll();	
+}
+
+function cambiar_estado($cod){
+	$res = leer_config(dirname(__FILE__)."/configuracion.xml", dirname(__FILE__)."/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+	$q = "SELECT Enviado FROM pedidos WHERE CodPed='$cod'";
+	$res = $bd->query($q);
+	$res = $res->fetchAll();
+	$nuevo = $res[0]["Enviado"];
+	if($nuevo == 1 ){
+		$nuevo =0;
+	}else{
+		$nuevo=1;
+	}
+		
+	$q = "UPDATE pedidos SET Enviado='$nuevo' WHERE CodPed='$cod'";
+	$res = $bd->query($q);
+	if(!$res){
+		return False;
+	}
+	return $q;
+}
